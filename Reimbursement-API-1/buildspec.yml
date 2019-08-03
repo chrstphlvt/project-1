@@ -6,4 +6,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'Reimbursement-API-1/buildspec.yml'
+  base-directory: 'Reimbursement-API-1'
