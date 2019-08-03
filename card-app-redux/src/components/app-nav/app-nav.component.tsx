@@ -41,7 +41,7 @@ export class NavComponent extends React.Component<INavProps> {
               <Link to="/clicker" className="unset-anchor nav-link">Clicker</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/cards" className="unset-anchor nav-link">Cards</Link>
+              <Link to="/reimbursement" className="unset-anchor nav-link">Reimbursement</Link>
             </li>
             <li className="nav-item active dropdown">
               <div className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</div>

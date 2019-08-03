@@ -1,7 +1,8 @@
 import { connectionPool } from '../util/connection.util';
 import { PoolClient } from 'pg';
-import { convertSqlUser } from '../util/user.converter';
+// import { convertSqlUser } from '../util/user.converter';
 import User from '../models/user';
+import convertSqlUser from '../util/user.converter';
 
 
 export async function findUsers(): Promise<User[]> { // promise to return array
@@ -52,7 +53,7 @@ export async function findByUsernameAndPassword(username: string, password: stri
         WHERE username = $1 AND pass = $2
         `;
         const result = await client.query(queryString, [username, password]);
-        console.log(result)
+        console.log(result);
         const query = result.rows[0]; // single user to be converted on postman
         return convertSqlUser(query); // return results converted
     } catch (err) {

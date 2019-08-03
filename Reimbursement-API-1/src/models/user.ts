@@ -8,7 +8,7 @@ export default class User {
         public firstName = '',
         public lastName = '',
         public email = '',
-        //public phone = '',
+        // public phone = '',
         public role = new Role() // user has a foreign key of role
     ) {}
 }

@@ -81,7 +81,7 @@ export class Cards extends Component<IProps, IComponentState> {
         });
     }
 
-    sellCard = async(cardId: number) => {
+    sellCard = async (cardId: number) => {
         const body = {
             id: cardId,
             owner: null
@@ -91,7 +91,7 @@ export class Cards extends Component<IProps, IComponentState> {
         this.setState({
             ...this.state,
             cards: this.state.cards.map(card => {
-                if(card.id === updatedCard.id) {
+                if (card.id === updatedCard.id) {
                     return updatedCard;
                 } else {
                     return card;
@@ -100,7 +100,7 @@ export class Cards extends Component<IProps, IComponentState> {
         })
     }
 
-    buyCard = async(cardId: number) => {
+    buyCard = async (cardId: number) => {
         const body = {
             id: cardId,
             owner: {
@@ -112,7 +112,7 @@ export class Cards extends Component<IProps, IComponentState> {
         this.setState({
             ...this.state,
             cards: this.state.cards.map(card => {
-                if(card.id === updatedCard.id) {
+                if (card.id === updatedCard.id) {
                     return updatedCard;
                 } else {
                     return card;
@@ -122,7 +122,7 @@ export class Cards extends Component<IProps, IComponentState> {
     }
 
     getPurchaseOption = (card: Card) => {
-        if(this.props.currentUser) {
+        if (this.props.currentUser) {
             if (!card.owner) {
                 return <td>
                     <Button color="success" onClick={() => this.buyCard(card.id)}>Buy</Button>
@@ -140,7 +140,7 @@ export class Cards extends Component<IProps, IComponentState> {
         const cards = this.state.cards;
         return (
             <div id="card-table-container">
-                <ButtonDropdown id="card-game-dropdown"
+                {/* <ButtonDropdown id="card-game-dropdown"
                     isOpen={this.state.gameDropdown.isOpen}
                     toggle={this.toggleGameDropdown}>
 
@@ -159,7 +159,7 @@ export class Cards extends Component<IProps, IComponentState> {
                             ))
                         }
                     </DropdownMenu>
-                </ButtonDropdown>
+                </ButtonDropdown> */}
                 <table className="table table-striped table-dark">
                     <thead>
                         <tr>

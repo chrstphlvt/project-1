@@ -1,16 +1,10 @@
-// login under user router
-
 import express from 'express';
 import * as UserDao from '../daos/user.dao';
 
 export const authRouter = express.Router();
 
-/**
- *  login in user
- *  /login
- */
 authRouter.post('/login', async (req, res) => {
-    const { username, password } = req.body; // deconstructor
+    const { username, password } = req.body;
     console.log(req.body);
     const user = await UserDao.findByUsernameAndPassword(username, password);
     if (user) {

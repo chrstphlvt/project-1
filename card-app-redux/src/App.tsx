@@ -16,6 +16,7 @@ import SignIn from './components/sign-in/sign-in.component';
 import Cards from './components/cards/cards.component';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import Reimbursement from './models/reimbursement';
 
 
 const App: React.FC = () => {
@@ -30,7 +31,7 @@ const App: React.FC = () => {
             <Route path="/first" component={FirstComponent} />
             <Route path="/second" component={Second} />
             <Route path="/third" component={Third} />
-            <Route path="/cards" component={Cards} />
+            <Route path="/reimbursement" component={Reimbursement} />
             <Route path="/chuck-norris" component={Norris} />
             <Route path="/clicker" component={Clicker} />
             <Route path="/home" component={Home} />
