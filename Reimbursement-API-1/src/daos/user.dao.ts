@@ -64,7 +64,7 @@ export async function findByUsernameAndPassword(username: string, password: stri
     return undefined;
 }
 
-export async function updateUser(user: User): Promise<User> {
+export async function updateUser(user: Partial<User>): Promise<User> {
     console.log(user);
     const oldUser = await findById(user.id);
     if (!oldUser) {
@@ -78,12 +78,25 @@ export async function updateUser(user: User): Promise<User> {
     let client: PoolClient;
     try {
         client = await connectionPool.connect(); // basically .then is everything after this
-        const queryString = `
+        let queryString = '';
+        let params = [];
+        if (!user.password) {
+            queryString = `
+            UPDATE ers_user SET username = $1, first_name = $2, last_name = $3, email = $4, role_id = $5
+            WHERE user_id = $6
+            RETURNING *`;
+            params = [user.username, user.firstName, user.lastName, user.email, user.role.roleId, user.id];
+        }
+        else {
+            queryString = `
             UPDATE ers_user SET username = $1, pass = $2, first_name = $3, last_name = $4, email = $5, role_id = $6
-            WHERE user_id = $7`;
-        const params = [user.username, user.password, user.firstName, user.lastName, user.email, user.role.roleId, user.id];
-        await client.query(queryString, params);
-        return convertSqlUser(user); // returns JS notation instead of SQL notation
+            WHERE user_id = $7
+            RETURNING *`;
+            params = [user.username, user.password, user.firstName, user.lastName, user.email, user.role.roleId, user.id];
+        }
+        const result = await client.query(queryString, params);
+        const sqlUser = result.rows[0];
+        return convertSqlUser(sqlUser); // returns JS notation instead of SQL notation
     } catch (err) {
         console.log(err);
     } finally {

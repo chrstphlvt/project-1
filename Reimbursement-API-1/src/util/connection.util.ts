@@ -5,7 +5,7 @@ import { Pool } from 'pg';
 const connectionConfiguration = {
     user: process.env.REIMBURSE_DB_USERNAME,
     host: process.env.REIMBURSE_DB_URL || 'localhost',
-    database: process.env.REIMBURSE_DB_NAME || 'project0',
+    database: process.env.REIMBURSE_DB_NAME || 'postgres',
     password: process.env.REIMBURSE_DB_PASSWORD,
     port: +process.env.REIMBURSE_DB_PORT || 5432,
     max: 5

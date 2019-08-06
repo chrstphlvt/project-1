@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Reimbursement from '../../models/reimbursement';
+import { environment } from '../../environment';
+import { userInfo } from 'os';
 //import { ButtonDropdown } from 'reactstrap';
 
 interface IState {
@@ -16,7 +18,9 @@ export default class ReimbursementComponent extends Component<{}, IState> {
     }
 
     async componentDidMount() {
-        const resp = await fetch('http://localhost:8012/reimbursements/status/1', {
+        const user = localStorage.getItem('user');
+        const currentUser = user && JSON.parse(user)
+        const resp = await fetch(environment.context + '/reimbursements/author/' + currentUser.id, {
             credentials: 'include'
         });
         const reimbursementsFromServer = await resp.json();
@@ -50,13 +54,14 @@ export default class ReimbursementComponent extends Component<{}, IState> {
                         {
                             reimbursements.map(reimbursement =>
                                 <tr key={'reimbursementId-'+reimbursement.reimbursementId}>
-                                    <td>{reimbursement.author}</td>
+                                    <td>{reimbursement.reimbursementId}</td>
+                                    <td>{reimbursement.author.username}</td>
                                     <td>{reimbursement.amount}</td>
-                                    <td>{reimbursement.dateSubmitted}</td>
-                                    <td>{reimbursement.dateResolved}</td>
+                                    <td>{new Date(reimbursement.dateSubmitted).toDateString()}</td>
+                                    <td>{reimbursement.dateResolved&&new Date(reimbursement.dateResolved).toDateString()}</td>
                                     <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
-                                    <td>{reimbursement.status}</td>
-                                    <td>{reimbursement.type}</td>
+                                    <td>{reimbursement.status.status}</td>
+                                    <td>{reimbursement.type.type}</td>
                                 </tr>)
                         }
                     </tbody>

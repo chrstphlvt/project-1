@@ -30,11 +30,8 @@ reimburseRouter.get('/status/:statusId', [authMiddleware('admin', 'finance-manag
 reimburseRouter.get('/author/:userId', [authMiddleware('admin', 'finance-manager'), async (req, res) => {
     const id = req.params.userId; // gets author id and stores in id
     const result = await reimburseDao.findByUserId(id);
-    if (req.session.reimbursement && req.session.reimbursement.author === id || req.session.user.role.roleId === 1 || req.session.user.role.roleId === 2 ) {
-        res.json(result);
-    } else {
-        res.json('You are not authorized to see info');
-    } // send info to postman in json form
+    res.json(result);
+ // send info to postman in json form
 }]);
 
 /**
@@ -43,6 +40,7 @@ reimburseRouter.get('/author/:userId', [authMiddleware('admin', 'finance-manager
  * ANY PERSRON
  */
 reimburseRouter.post('', [authMiddleware('admin', 'finance-manger', 'employee'), async (req, res) => {
+    req.body.author.id = req.session.user.id;
     const result = await reimburseDao.submitReimburse(req.body);
     res.json(result);
     // res.send(`submitting reimbursement`);

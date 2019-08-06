@@ -8,16 +8,15 @@ import Reimbursement from '../models/reimbursement';
 export async function submitReimburse(reimbursement: reimbursement) {
     let client: PoolClient;
     try {
-        client = await connectionPool.connect(); // basically .then is everything after this
+        client = await connectionPool.connect(); // basically .then is everything after thiss
         const queryString = `
-            INSERT INTO reimbursement (author, amount, date_submitted, date_resolved, description, resolver, status_id, type_id)
-            VALUES 	($1, $2, $3, $4, $5, $6, $7, $8)
-            RETURNING reimbursement_id
+            INSERT INTO reimbursement (author, amount, date_submitted, description, status_id, type_id)
+            VALUES 	($1, $2, CURRENT_TIMESTAMP, $3, 1, $4)
+            RETURNING *
         `;
-        const params = [reimbursement.author.id, reimbursement.amount, reimbursement.dateSubmitted, reimbursement.dateResolved, reimbursement.description, reimbursement.resolver.id, reimbursement.status.statusId, reimbursement.type.typeId];
+        const params = [reimbursement.author.id, reimbursement.amount, reimbursement.description, reimbursement.type.typeId];
         const result = await client.query(queryString, params);
-        reimbursement.reimbursementId = reimburseConverter(result.rows[0]).reimbursementId;
-        return reimbursement;
+        return reimburseConverter(result.rows[0]);
     } catch (err) {
         console.log(err);
     } finally {
@@ -35,7 +34,6 @@ export async function findByUserId(authorId: number) {
         const queryString = `
        SELECT r.*, rt.type_name, rs.status_name, author.user_id AS author_user_id, author.username AS author_username, author.pass AS author_pass, author.first_name AS author_first_name, author.last_name AS author_last_name, author.email AS author_email, author.role_id AS author_role_id, ar.role_type AS author_role_type,
         resolver.user_id AS resolver_user_id, resolver.username AS resolver_username, resolver.pass AS resolver_pass, resolver.first_name AS resolver_first_name, resolver.last_name AS resolver_last_name, resolver.email AS resolver_email, resolver.role_id AS resolver_role_id, rr.role_type AS resolver_role_type
-
             FROM reimbursement AS r
             LEFT JOIN reimbursement_type AS rt USING (type_id)
             LEFT JOIN reimbursement_status AS rs USING (status_id)
@@ -43,12 +41,11 @@ export async function findByUserId(authorId: number) {
             LEFT JOIN user_role AS ar ON (ar.role_id = author.role_id)
             LEFT JOIN ers_user AS resolver ON (resolver = resolver.user_id)
             LEFT JOIN user_role AS rr ON (rr.role_id = resolver.role_id)
-            WHERE author = $1`;
+            WHERE author.user_id = $1`;
         const result = await client.query(queryString, [authorId]);
         // convert result from sql object to js object
-        const sqlResult = result.rows[0];
-        console.log(sqlResult);
-        return reimburseConverter(sqlResult);
+        const sqlResult = result.rows;
+        return sqlResult && sqlResult.map(reimburseConverter);
     } catch (err) {
         console.log(err);
     } finally {

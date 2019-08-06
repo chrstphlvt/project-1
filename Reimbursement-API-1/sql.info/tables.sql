@@ -27,8 +27,8 @@ CREATE TABLE reimbursement (
         reimbursement_id SERIAL PRIMARY KEY,
         author INTEGER REFERENCES ers_user(user_id), -- -> User, not null
         amount NUMERIC(8,2) NOT NULL,
-        date_submitted NUMERIC(14,0) NOT NULL,
-        date_resolved NUMERIC(14,0),
+        date_submitted TIMESTAMP NOT NULL,
+        date_resolved TIMESTAMP,
         description TEXT NOT NULL,
         resolver INTEGER REFERENCES ers_user(user_id), -- -> User
         status_id INTEGER REFERENCES reimbursement_status(status_id), ---> fk to ReimbursementStatus, not null

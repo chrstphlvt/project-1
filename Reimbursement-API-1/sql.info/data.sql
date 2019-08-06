@@ -16,6 +16,6 @@ INSERT INTO ers_user(username, pass, first_name, last_name, email, role_id) VALU
 	('angle91', '0620', 'Noel', 'Levette', 'nl@gmail.com', 2),
 	('angel99', '0216', 'Angel', 'Levette', 'al@gmail.com', 3);
 INSERT INTO reimbursement(author, amount, date_submitted, date_resolved, description, resolver, status_id, type_id) VALUES	
-	(2, 1500.00, 1563584376049, 1563584376157, 'over paided taxes', 1, 2, 1),
-	(3, 750.00, 1563584346049, 1563584366107, 'under paided taxes', 1, 3, 1),
-	(3, 1500.00, 1563584356049, 1563584366157, 'unauthorized expenditures', 2, 3, 3);
+	(2, 1500.00, '07-24-2019', '08-03-2019', 'over paided taxes', 1, 2, 1),
+	(3, 750.00, '07-26-2019', '08-03-2019', 'under paided taxes', 1, 3, 1),
+	(3, 1500.00, '07-27-2019', '08-03-2019', 'unauthorized expenditures', 2, 3, 3);

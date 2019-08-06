@@ -13,10 +13,9 @@ import { Norris } from './components/norris/norris.component';
 import Pokemon from './components/pokemon/pokemon.component';
 import { Nested } from './components/nested/nested.component';
 import SignIn from './components/sign-in/sign-in.component';
-import Cards from './components/cards/cards.component';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import Reimbursement from './models/reimbursement';
+import ReimbursementComponent from './components/cards/reimbursement.component';
 
 
 const App: React.FC = () => {
@@ -31,7 +30,7 @@ const App: React.FC = () => {
             <Route path="/first" component={FirstComponent} />
             <Route path="/second" component={Second} />
             <Route path="/third" component={Third} />
-            <Route path="/reimbursement" component={Reimbursement} />
+            <Route path="/reimbursement" component={ReimbursementComponent} />
             <Route path="/chuck-norris" component={Norris} />
             <Route path="/clicker" component={Clicker} />
             <Route path="/home" component={Home} />
