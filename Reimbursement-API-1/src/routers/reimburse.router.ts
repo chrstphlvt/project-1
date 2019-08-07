@@ -50,9 +50,9 @@ reimburseRouter.post('', async (req, res) => {
  * reimbursements
  * Updating reimbursement
  */
-reimburseRouter.patch('', [authMiddleware('admin', 'finance-manger'), async (req, res) => {
+reimburseRouter.patch('', async (req, res) => {
     const result = await reimburseDao.updateReimburse(req.body);
     res.json(result);
     // res.send(`updating reimbursement`);
-}]);
+});
 
