@@ -2,7 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import RevLogo from '../assets/rev-logo.png';
 
-export class NavComponent extends React.Component {
+interface IState {
+  userRole: number
+}
+
+export class NavComponent extends React.Component<{}, IState> {
+
+  constructor(props: any) {
+    super(props);
+    this.state = ({
+      userRole: 0
+    });
+  }
+
+getUser = () => {
+  const userString= localStorage.getItem('user');
+  const user = userString && JSON.parse(userString);
+  this.setState({
+    ...this.state,
+    userRole: user.role.roleId
+  })
+}
+
+componentDidMount(){
+  this.getUser();
+}
+
   render() {
     return (
       <nav className="navbar navbar-toggleable-md navbar-expand-lg navbar-light bg-light display-front nav-pad">
@@ -29,7 +54,11 @@ export class NavComponent extends React.Component {
               <Link to="/second" className="unset-anchor nav-link">Create Reimbursement</Link>
             </li>
             <li className="nav-item active">
-              <Link to="/clicker" className="unset-anchor nav-link">Processing Reimbursements</Link>
+              {
+                this.state.userRole && (this.state.userRole !== 3 )
+                ?<Link to="/clicker" className="unset-anchor nav-link">Processing Reimbursements</Link>
+                : null
+              }
             </li>
             <li className="nav-item active">
               <Link to="/cards" className="unset-anchor nav-link">My Reimbursements</Link>

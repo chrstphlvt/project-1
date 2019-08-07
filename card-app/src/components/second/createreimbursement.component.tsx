@@ -20,7 +20,7 @@ export default class CreateReimbursementComponent extends React.Component<{}, IS
             dropdownOpen: false,
             amount: '',
             description: '',
-            type: '',
+            type: '1',
         };
         this.toggle = this.toggle.bind(this);
     }

@@ -73,8 +73,8 @@ export async function findById(reimbursementId: number) {
             WHERE reimbursement_id = $1`;
         const result = await client.query(queryString, [reimbursementId]);
         // convert result from sql object to js object
-        const sqlResult = result.rows;
-        return sqlResult.map(reimburseConverter);
+        const sqlResult = result.rows[0];
+        return reimburseConverter(sqlResult);
     } catch (err) {
         console.log(err);
     } finally {

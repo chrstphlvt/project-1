@@ -14,7 +14,7 @@ import { Nested } from './components/nested/nested.component';
 import { SignIn } from './components/sign-in/sign-in.component';
 import ReimbursementComponent from './components/cards/reimbursement.component';
 import FindUserByUserIdComponent from './components/pokemon/by-userid.component';
-// import ReimbursementByReimbIdComponent from './components/norris/reimbursementbyreim-userid.component';
+
 import FindAllUsersComponent from './components/pokemon/allusers.component';
 import ReimbursementByUserIdComponent from './components/norris/reimbursementbyreim-userid.component';
 
@@ -31,7 +31,7 @@ const App: React.FC = () => {
           <Route path="/cards" component={ReimbursementComponent} />
           <Route path="/get-reim-by-status" component={ReimbursementByStatusComponent} />
           <Route path="/get-reim-by-user-id" component={ReimbursementByUserIdComponent} />
-          {/* <Route path="/clicker" component={Clicker} /> */}
+          <Route path="/clicker" component={ReimbursementApproveByStatusComponent} />
           {/* <Route path="/by-status" component={Clicker} /> */}
           <Route path="/home" component={Home} />
           <Route path="/nested" component={Nested} />

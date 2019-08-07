@@ -12,23 +12,57 @@ export default class ReimbursementApproveByStatusComponent extends React.Compone
 
     constructor(props: any) {
         super(props);
-        const status = localStorage.getItem('status');
-        const statusId = status && JSON.parse(status).id;
         this.state = {
             reimbursements: [], //return array of reimbursement
-            status: statusId
+            status: ''
         };
+        this.getStatus = this.getStatus.bind(this);
+        this.search();
     }
 
-    getStatus = (event: React.ChangeEvent<HTMLInputElement>) => {
+    getStatus = (event: React.ChangeEvent<HTMLInputElement>, reimbursementId:any) => {
         this.setState({
             ...this.state,
             status: event.target.value
         })
+        
+        setTimeout(()=>{this.submit(reimbursementId)},1000);
     }
 
-    search = async (event: any) => {
-        event.preventDefault();
+    submit = async (reimbursementId:any) => {
+        const user = localStorage.getItem('user');
+        const currentUser = user && JSON.parse(user)
+
+        let submitReim = {
+            reimbursementId: reimbursementId,
+            status:{
+                statusId: +this.state.status
+            },
+            resolver: {
+                id: currentUser.id 
+            },
+            dateResolved: new Date()
+        }
+        console.log(submitReim);
+        try {
+            const resp = await fetch(environment.context + `/reimbursements`, {
+                credentials: 'include',
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(submitReim)
+            });
+
+            const reimbursementFromServer = await resp.json();
+            console.log(reimbursementFromServer);
+        } catch (err) {
+            console.log(err)
+        }
+        this.search();
+    }
+
+    search = async () => {
         const resp = await fetch(environment.context + `/reimbursements/status/1`, {
             credentials: 'include'
         });
@@ -39,12 +73,6 @@ export default class ReimbursementApproveByStatusComponent extends React.Compone
         });
     }
 
-    // handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     this.setState({
-    //         ...this.state,
-    //         status: event.target.value
-    //     })
-    // }
 
     render() {
         const reimbursements = this.state.reimbursements;
@@ -76,10 +104,11 @@ export default class ReimbursementApproveByStatusComponent extends React.Compone
                                     <td>{reimbursement.resolver && reimbursement.resolver.username}</td>
                                     <td>{reimbursement.status.status}</td>
                                     <td>{reimbursement.type.type}</td>
-                                    {<Input type="select" onChange={this.getStatus}>
-                                        <option value="1">Approval</option>
-                                        <option value="2">Deny</option>
-                                    </Input>}
+                                    {<td><Input type="select" onChange={e=>this.getStatus(e, reimbursement.reimbursementId)}>
+                                        <option hidden={this.state.status} value=''>Select</option>
+                                        <option value="2">Approval</option>
+                                        <option value="3">Deny</option>
+                                    </Input></td>}
                                 </tr>)
                         }
                     </tbody>
