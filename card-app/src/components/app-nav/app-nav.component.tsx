@@ -55,7 +55,7 @@ componentDidMount(){
             </li>
             <li className="nav-item active">
               {
-                this.state.userRole && (this.state.userRole !== 3 )
+                this.state.userRole && (this.state.userRole === 1 || this.state.userRole === 2)
                 ?<Link to="/clicker" className="unset-anchor nav-link">Processing Reimbursements</Link>
                 : null
               }
