@@ -68,8 +68,8 @@ export default class FindUserByUserIdComponent extends React.Component<{}, IStat
         return (
             // form with search button
             <form onSubmit={this.submit}>
-                <div className="form-group">
-                    <label >User Id</label>
+                <div className="form-group"><h4>Find By User Id</h4>
+                    {/* <label >User Id</label> */}
                     <input type="userid" name="id" className="form-control" value={this.state.user.id} onChange={this.handleChange} placeholder="Enter User ID#" />
                     <button type="submit" className="btn btn-primary">Search</button>
                 </div>

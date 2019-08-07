@@ -48,7 +48,7 @@ export default class FindAllUsersComponent extends React.Component<{}, IState> {
     render() {
         const users = this.state.users;
         return (
-            <div id="users-table-container">
+            <div id="users-table-container"><h4>Find All Users</h4>
                 
                 <table className="table table-striped table-dark">
                     <thead>

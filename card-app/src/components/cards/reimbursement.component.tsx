@@ -34,7 +34,7 @@ export default class ReimbursementComponent extends Component<{}, IState> {
     render() {
         const reimbursements = this.state.reimbursements;
         return (
-            <div id="reimbursement-table-container">
+            <div id="reimbursement-table-container"><h4>My Reimbursement</h4>
                 
                 <table className="table table-striped table-dark">
                     <thead>
@@ -53,7 +53,7 @@ export default class ReimbursementComponent extends Component<{}, IState> {
                     <tbody>
                         {
                             reimbursements.map(reimbursement =>
-                                <tr key={'reimbursementId-'+reimbursement.reimbursementId}>
+                                <tr key={'reimbursementId-'+reimbursement.reimbursementId}> 
                                     <td>{reimbursement.reimbursementId}</td>
                                     <td>{reimbursement.author.username}</td>
                                     <td>{reimbursement.amount}</td>

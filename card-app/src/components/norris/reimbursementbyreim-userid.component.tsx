@@ -57,7 +57,7 @@ export default class ReimbursementByUserIdComponent extends React.Component<{}, 
         const reimbursements = this.state.reimbursements;
         return (
             
-            <div id="reimbursement-table-container">Reimbursement By User Id:
+            <div id="reimbursement-table-container"><h4>Reimbursement By User Id:</h4>
                 <input type="number" value={this.state.id} onChange={this.handleChange} />
                 <Button onClick={this.search}>Search</Button>
                 

@@ -42,7 +42,7 @@ export default class ReimbursementByStatusComponent extends React.Component<{}, 
     render() {
         const reimbursements = this.state.reimbursements;
         return (
-            <div id="reimbursement-table-container">Find Reimbursement By Status Id: 
+            <div id="reimbursement-table-container"><h4>Find Reimbursement By Status Id</h4> 
 
                 <input type="number" value={this.state.status} onChange={this.handleChange} />
                 <Button onClick={this.search}>Search</Button>
